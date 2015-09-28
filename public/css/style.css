@@ -1,0 +1,552 @@
+/* GENERAL & RESET ///////////////////////////////////////////////////////////*/
+
+html, body {
+	/*height: 100%;*/
+}
+
+html {
+	cursor:default;
+	
+	/* Not selectable (in general) */
+	user-select:none;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+}
+
+body {
+	font-family: "Calibri Light", "Avenir Next"; /* TO-DO: Google Fonts! */
+	padding:5rem 2rem 2rem 2rem;
+	margin:0;
+
+	background: #EFE;
+	max-width:1000px;
+	
+	overflow-x: hidden;
+	overflow-y: scroll;
+	
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+
+	line-height: 1.25rem;
+}
+
+/* Viewport frame */
+
+body:before, body:after {
+	content:"";
+	position:fixed;
+	left:0;
+	width:100%;
+	height:.5rem;
+	z-index:9;
+	background:#000;
+	
+	backface-visibility: hidden; /* Stop repainting! */
+}
+
+body:before {
+	top:0;
+}
+
+body:after {
+	bottom:0;
+}
+
+
+footer:before, footer:after {
+	content:"";
+	position:fixed;
+	top:0;
+	height:100%;
+	width:.5rem;
+	z-index:8;
+	background:#000;
+	
+	backface-visibility: hidden; /* Prevent repainting! */
+}
+
+footer:before {
+	left:0;
+}
+
+footer:after {
+	right:0;
+}
+
+
+/* Link reset */
+a:link, a:visited, a:hover, a:active{ text-decoration : none; color: inherit; }	
+
+
+
+
+
+/* LAYOUT & TEXT /////////////////////////////////////////////////////////////*/
+
+section {
+	margin: 0 0 2rem 0;
+}
+
+h1, h2 {
+	font-family: "Century Gothic", "Futura"; /* TO-DO: Google Fonts! */
+	padding:0;
+	margin:0;
+	text-transform:uppercase;
+}
+
+h1 {
+	font-size: 2rem;
+	line-height: 2.5rem;
+	margin: 0 0 1rem 0;
+}
+
+h2 {
+	font-size: 1.5rem;
+	line-height: 2rem;
+	/*overflow:hidden;*/
+}
+
+#chandouts-wr > h1, #chandouts-wr > h2 {opacity: .5;}
+
+img {
+	position:relative;
+	width:100%;
+	margin: 2rem 0 0 0;
+}
+
+
+
+
+
+.fr { float: right; }
+.fl { float: left; }
+
+
+
+
+/* MENU //////////////////////////////////////////////////////////////////////*/
+
+#actionbar {
+	position: fixed;
+	top:0;
+	left:0;
+	width: 1000px;
+	height: 3rem;
+	line-height: 3rem;
+	background: #000;
+	color: #FF0;
+	z-index: 100;
+}
+
+#actionbar ul {
+	padding: 0 1.5rem;
+}
+
+#actionbar a {
+	display: block;
+	padding: 0 .5rem;
+}
+
+#actionbar a span {
+	position: relative;
+}
+
+#actionbar a span::after {
+	content:"";
+	position: absolute;
+	bottom: -.125rem;
+	left: 0;
+	width: 0;
+	background: #FF0;
+	height: .125rem;
+	transition: width ease-out .25s;
+}
+
+#actionbar a:hover span::after {
+	width: 100%;
+}
+
+#handouts-app {
+	font-weight: bold;
+}
+
+
+
+
+/* HANDOUTS LIST /////////////////////////////////////////////////////////////*/
+
+#ohandouts, #chandouts {
+	/*overflow:hidden;*/
+	margin: 2rem 0 0 0;
+}
+
+#ohandouts > li, #chandouts > li{
+	/*overflow:hidden;*/
+	border-bottom: 3px solid #000;
+	margin: 0 0 1rem 0;
+}
+
+#chandouts > li{
+	opacity:.5;
+}
+
+#chandouts>li:hover{
+	opacity:1;
+}
+
+#ohandouts > li:last-child, #chandouts > li:last-child{
+	margin: 0;
+}
+
+ul {
+	padding: 0;
+	margin:0;
+	list-style:none;
+}
+
+header {
+	padding: 0 0 1rem 0;
+}
+
+.title {
+
+	margin: 0 0 .5rem 0;
+	
+	/*height: 2rem;*/
+	padding: 0 7.5rem 0 0;
+	
+	position:relative;
+	z-index: 11;
+
+
+    /* Be VERY careful with this, breaks normal words wh_erever */
+	-ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word; /* Non standard for webkit */
+	
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	hyphens: auto;
+}
+
+/* HANDOUTS BITS /////////////////////////////////////////////////////////////*/
+
+
+
+
+.actions, .upload-form {
+	margin: 0 0 1rem 0;
+	line-height: 2rem;
+	overflow: hidden;
+
+}
+
+.upload-form {
+	padding: 0 7.5rem 0 5.5rem;
+
+}
+
+
+
+
+.btn, .tag, .inp, .fill-tag {
+
+	width:7rem;
+	
+	line-height: 2rem;
+	font-size:1rem;
+	padding: 0 .25rem;
+	text-transform:uppercase;
+	font-weight:bold;
+	margin: 0;
+	height:2rem;
+	border: 3px solid #000;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	text-align:right;
+	
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	
+	outline: none;
+	background: transparent;
+
+	font-family: "Century Gothic", "Futura";
+}
+
+.fill-tag {
+	display: block;
+	width:100%;
+	border: none;
+	border-bottom: 1px dotted #000;
+	padding: calc(.5rem - 3px) calc(.25rem + 3px) 2px calc(.25rem + 3px);
+	text-align: left;
+
+	padding-bottom: 0px;
+    padding-top: 7px;
+    line-height: 1.5rem;
+    box-sizing: border-box;
+}
+
+
+
+.editable {
+	position: relative;
+	border-bottom: 1px solid transparent;
+}
+
+.inp {
+	border: none;
+}
+
+.editing, .inp {
+	border-bottom: 1px dotted #000;
+	cursor: text;
+	outline: none;
+}
+
+.editing.date, .thin  {
+	cursor: pointer;
+}
+
+.tag.thin {
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	overflow: visible;
+	position: relative;
+}
+
+
+
+.editable:focus, .inp:focus {
+	border-bottom: 1px solid #000;
+}
+
+.title > .editable:empty {
+	display: inline-block;
+	height: 2rem;
+	box-sizing: border-box;
+}
+
+.editable:empty::before, .inp:empty::before {
+	content: attr(placeholder);
+	opacity: .5;
+}
+
+/*
+.editable:empty:focus::after, .inp:empty:focus::after {
+	content:"";
+	position: absolute;
+	left: 0;
+	top: 0;
+	border-right: 1px solid #000;
+}
+*/
+
+
+#templates {
+	display: none;
+}
+
+
+.options {
+	background: #000;
+	color: #FF0;
+	border-radius: 2px;
+	box-shadow: 0 0 32px -16px #000;
+	width: 300%;
+	z-index: 12;
+
+	overflow: hidden;
+	text-overflow: clip;
+	white-space: normal;
+
+	font-family: "Calibri Light", "Avenir Next";
+	font-size: .75rem;
+	font-weight: normal;
+	line-height: 1rem;
+
+	padding: .25rem 0;
+
+	position: absolute;
+	top:100%;
+	margin: .25rem 0 0 0;
+
+	max-height: 100px;
+	overflow-x:hidden;
+	overflow-y:scroll;
+}
+
+.options > li {
+	padding: .25rem .5rem;
+}
+
+.options > li:hover {
+	background: #FF0;
+	color: #000;
+}
+
+
+
+
+.btn, .tag {
+	background:transparent;
+	border-radius: 3px;
+}
+
+.btn {
+	cursor:pointer;
+}
+
+.btn:hover {
+	background: #000;
+	color: #FF0;
+}
+
+.btn:focus {
+	border: 1px dotted #000;
+	padding: 2px calc(.25rem + 2px);
+}
+
+.small {
+	width: 5rem;
+}
+
+
+
+
+
+.subject, .niu {
+	text-align: left;
+}
+
+.subject {
+	float: left;
+}
+
+.edit, .save, .discard, .delete, .yes, .no, .message, .create, .clear {
+	float: right;
+}
+
+.subject {
+	margin: 0 .5rem 0 0;
+}
+
+.btn {
+	margin: 0 0 0 .5rem;
+}
+
+.niu, .upload, .download {
+	position: absolute;
+}
+
+.niu {
+	left: 0;
+	bottom: 0;
+}
+
+.upload {
+	right: 0;
+	bottom: 0;
+}
+
+.download {
+	right: 0;
+	top: 0;
+}
+
+.file {
+	min-width: 100px;
+}
+
+
+
+
+
+
+
+.details {
+	position:relative;
+}
+
+.time {
+	font-size: .75rem;
+	line-height; .75rem;
+	text-transform:uppercase;
+	position:relative;				
+}
+
+.time-bar-wrapper {
+	position:absolute;
+	top:0;
+	left:-5.5rem;
+	width:5rem;
+	height:100%;
+	
+	padding: 3px 0;
+	
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+}
+
+.time-bar {
+	position:relative;
+	height:100%;
+	display:block;
+	
+	background: repeating-linear-gradient(
+		90deg,
+		#000,
+		#000 1px,
+		transparent 1px,
+		transparent 2px
+	);
+}
+
+.description {
+	margin: 0 0 1rem 0;
+	text-align:justify;
+	outline: none;
+	line-height: 1.375rem;
+	/*
+	overflow:hidden;
+	padding: .5rem;
+	border-radius: .125rem;
+	background: #FFF;
+	box-shadow: 0 0 1rem -.25rem #000;*/
+
+}
+
+.description > .editable {
+	min-height: 1.375rem; 
+}
+
+p {
+	margin:0 0 .5rem 0;
+}
+
+.description > ul {
+	margin: 0 0 1rem 2rem;
+
+}
+
+.description > ul > li{
+	position:relative;			
+}
+
+.description > ul > li:before{
+	position:absolute;
+	top:0;
+	left:-1rem;
+	width:1rem;
+	text-align:left;
+	content:"-";
+
+}
+
+iframe, .hidden {
+	display:none;
+}
+

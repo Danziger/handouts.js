@@ -1,0 +1,25 @@
+
+<li>
+	<header>
+		<h2 class="title">
+			<span class="tag small subject">{{ item.subject }}</span>
+			<span class="editable" placeholder="Handout title...">{{ item.title }}</span>
+			<a href="/download/{{ item.id }}" class="btn download">DL ZIP</a>
+		</h2>
+		<div class="time">POSTED ON {{ formater.format(item.d0) }} | WILL CLOSE BY <span class="df editable date" data-df="{{ item.df.getTime() }}">{{ formater.format(item.df) }}</span> | TIME LEFT <span class="left">{{ formater.diff(now, item.df) }}</span></div>
+	</header>
+
+	<div class="details hidden">
+		<div class="description"><div class="editable" placeholder="Task description...">{{ item.description }}</div></div>
+
+		<footer class="actions">
+			<button class="btn edit">EDIT</button>
+			<button class="btn delete">DELETE</button>
+			<button class="btn save hidden">SAVE</button>
+			<button class="btn discard hidden">DISCARD</button>
+			<button class="btn no hidden">NO</button>
+			<button class="btn yes hidden">YES</button>
+			<span class="message hidden"></span>
+		</footer>
+	</div>
+</li>

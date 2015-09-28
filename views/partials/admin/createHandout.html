@@ -1,0 +1,27 @@
+<section id="ohandouts-wr"><h1>NEW HANDOUT</h1><h2>Is it motivating enough? Then it's ok!</h2>
+	<ul id="ohandouts">
+		<li>
+			<header>
+				<h2 class="title">
+					<span class="tag small subject thin" placeholder="subject">
+						{% include "subjects.html" %}
+					</span>
+					<span class="editable editing" placeholder="Handout title..." contenteditable="true"></span>
+				</h2>
+				<div class="time">POSTED ON {{ formater.format(item.d0) }} | WILL CLOSE BY <span class="df editable editing date" data-df="{{ item.df.getTime() }}">{{ formater.format(item.df) }}</span> | TIME LEFT <span class="left">{{ formater.diff(now, item.df) }}</span></div>
+			</header>
+
+			<div class="details">
+				<div class="description"><div class="editable editing" placeholder="Task description..." contenteditable="true"></div></div>
+
+				<footer class="actions">
+					<button class="btn create">CREATE</button>
+					<button class="btn clear">CLEAR</button>
+					<button class="btn no hidden">NO</button>
+					<button class="btn yes hidden">YES</button>
+					<span class="message hidden"></span>
+				</footer>
+			</div>
+		</li>
+	</ul>
+</section>

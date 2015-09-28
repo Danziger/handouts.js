@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>{{ title }}</title>
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+	</head>
+	<body>
+
+		{% block navbar %}
+			<nav id="actionbar">
+				<ul>
+					<li class="fl"id="handouts-app"><a href="/"><span>HANDOUTS</span></a></li>
+					<li class="fl"><a href="/"><span>ALL</span></a></li>
+					<li class="fl"><a href="/open"><span>OPEN</span></a></li>
+					<li class="fl"><a href="/closed"><span>CLOSED</span></a></li>
+
+					{% if authenticated  %}
+						<li class="fl"><a href="/new"><span>NEW</span></a></li>
+						<li class="fr"><a href="/logout"><span>LOGOUT</span></a></li>
+					{% else %}
+						<li class="fr"><a href="/login"><span>LOGIN</span></a></li>
+					{% endif %}
+				</ul>
+			</nav>
+		{% endblock %}
+
+		{% block content %}
+		{% endblock %}
+
+		<footer><h1>ABOUT</h1>Bla, bla, bla...</footer>
+
+		<script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="/js/jquery.js"></script>
+		<script type="text/javascript" src="/js/main.js"></script>
+		
+	</body>
+</html>

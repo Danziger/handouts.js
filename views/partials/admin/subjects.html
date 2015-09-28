@@ -1,0 +1,13 @@
+<input type="text" class="editable editing fill-tag" placeholder="subject"/>
+
+<ul class="options hidden">
+
+	{% if subjects && subjects.length > 0 %}
+
+		{% for item in subjects %}
+			<li>{{ item.abbr }} - {{ item.name }}</li>
+		{% endfor %}
+
+	{% endif %}
+
+</ul>

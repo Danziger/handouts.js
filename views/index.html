@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+
+
+
+
+{% block content %}
+
+
+	{% if previousBlocks && previousBlocks.length > 0 %}
+
+		{% for item in previousBlocks %}
+			{% include item %}
+		{% endfor %}
+
+	{% endif %}
+
+
+	{% if currentHandouts && currentHandouts.length > 0 %}
+		
+		<section id="ohandouts-wr"><h1>OPEN HANDOUTS</h1><h2>"Don't wish it were easier. Wish you were better." - Jim Rohn</h2>
+			<ul id="ohandouts">
+
+				{% for item in currentHandouts %}
+
+					{% include entryPartial %}
+
+				{% endfor %}
+
+			</ul>
+		</section>
+
+	{% elif currentHandouts && currentHandouts.length === 0 %}
+
+		<section id="ohandouts-wr"><h1>OPEN HANDOUTS</h1><h2>None! Just enjoy...</h2><img src="img/dilbert.jpg"/></section>
+
+	{% endif %}
+
+
+
+	{% if closedHandouts && closedHandouts.length > 0 %}
+		
+		<section id="chandouts-wr"><h1>CLOSED HANDOUTS</h1><h2>Hope you turned them in on time... There will be no mercy!</h2>
+			<ul id="chandouts">
+
+				{% for item in closedHandouts %}
+
+					{% include entryPartial %}
+
+				{% endfor %}
+
+			</ul>
+		</section>
+
+	{% elif currentHandouts && closedHandouts.length > 0 %}
+
+		<section id="chandouts-wr"><h1>CLOSED HANDOUTS</h1><h2>None! Just enjoy...</h2><img src="img/dilbert.jpg"/></section>
+
+	{% endif %}
+
+
+
+{% endblock %}
