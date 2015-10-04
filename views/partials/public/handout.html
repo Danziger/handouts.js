@@ -2,7 +2,7 @@
 <li>
 	<header>
 		<h2 class="title">
-			<span class="tag small subject">{{ item.subject }}</span>
+			<span class="tag small subject" data-title="{{ item.subject.name }}">{{ item.subject.abbr }}</span>
 			<span class="editable">{{ item.title }}</span>
 		</h2>
 		<div class="time">POSTED ON {{ formater.format(item.d0) }} | WILL CLOSE BY <span class="df editable date" data-df="{{ item.df.getTime() }}">{{ formater.format(item.df) }}</span> | TIME LEFT <span class="left">{{ formater.diff(now, item.df) }}</span></div>
@@ -11,10 +11,9 @@
 	<div class="details hidden">
 		<div class="description"><div class="editable">{{ item.description }}</div></div>
 
-		<form method="POST" class="upload-form" action="/" enctype="multipart/form-data">
-			<input type="hidden" name="_id" value="{{ item.id }}" />
+		<form method="POST" class="upload-form" action="/handout/{{ item.id }}" enctype="multipart/form-data">
 			<input type="text" class="inp small niu editable editing" name="NIU" pattern="[0-9]*" placeholder="NIU" />
-			<input type="file" class="file" name="file" />
+			<label class="file-wr btn"><span>No file selected...</span><input type="file" class="file" name="file" /></label>
 			<input type="submit" class="btn upload" value="UPLOAD" />
 		</form>
 	</div>

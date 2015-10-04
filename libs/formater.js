@@ -34,16 +34,8 @@ exports.format = function(d) {
 
 exports.diff = function(d0, df) { // TO-DO: No need, will be updated in the browser!
 
-	console.log(d0);
-	console.log(df);
-	console.log(normalizeTimestamp(df) - normalizeTimestamp(d0));
-
 	var d = new Date(normalizeTimestamp(df) - normalizeTimestamp(d0));
 	
-	console.log(pad(days = Math.floor(d.getTime()/86400000), 2) + 'D ');
-console.log(pad(days = Math.floor(d.getTime()/86400000), 2) + 'D ' + pad(Math.floor(d.getTime()/3600000) - days*24, 2) + 'H ' + pad(d.getMinutes(), 2) + 'M');
-
-
 	return pad(days = Math.floor(d.getTime()/86400000), 2) + 'D '
 		+ pad(Math.floor(d.getTime()/3600000) - days*24, 2) + 'H '
 		+ pad(d.getMinutes(), 2) + 'M';  

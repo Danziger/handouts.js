@@ -8,8 +8,9 @@ mongoose.connect('mongodb://localhost/handouts');
 
 mongoose.mongo.BSONPure = require('bson').BSONPure
 
-var Handout = require('../models/Handout')(mongoose);
-var Subject = require('../models/Subject')(mongoose);
+var models = require('../models/models')(mongoose);
+var Handout = models.Handout;
+var Subject = models.Subject;
 
 var gridform = require('gridform');
 gridform.db = mongoose.connection.db;
@@ -20,6 +21,52 @@ var GFS = gridform.gridfsStream(gridform.db, gridform.mongo);
 
 var lazystream = require('lazystream');
 var archiver = require('archiver');
+
+
+function JSONresponse(res, obj, statusCode) {
+
+	statusCode = (statusCode === parseInt(statusCode, 10) ? statusCode : 200);
+
+	obj.statusCode = statusCode;
+
+	res.json(obj);
+};
+
+
+
+function JSONerror(res, msg, statusCode) {
+	statusCode = (statusCode === parseInt(statusCode, 10) ? statusCode : 400);
+	res.json({statusCode, msg});
+};
+
+
+
+
+
+
+// Autoload for routes that contain :quizId
+// DRY (Don't Repeat Yourself)
+exports.load = function(req, res, next, handoutID) {
+
+	Handout.findOne({_id: handoutID}).then(function(handout) {
+		if(handout) {
+			req.handout = handout;
+			next();
+		}
+		else {
+			next(new Error("No handout with id = " + handoutID));
+		}
+	}).catch(function(err){
+		next(err);
+	});
+};
+
+
+
+
+
+
+
 
 
 
@@ -106,16 +153,34 @@ exports.new = function(req, res) {
 
 
 
-exports.handout = function(req, res, next) {
 
+
+
+
+
+exports.handout = function(req, res, next) {
 
 	console.log("Upload handlers...");
 
+	var now = new Date().getTime();
 
-	if(!isFormData(req)) return this.error(req, res, 400, '400 Bad Request: Expecting multipart/form-data.');
+	if(req.handout.df.getTime() < now) {
+		return JSONresponse(res, {msg: "Not possible to upload now."});
+	}
 
-	// 1024 * 1024 * 25 MB + 512 free bytes (headers) 
-	if(parseInt(req.headers['content-length']) > 26214912) return this.error(req, res, 400, '400 Bad Request: File too big (25 Mb max.).');
+
+
+
+	var id = req.handout.id;
+
+	if(!isFormData(req)) {
+		return JSONerror(res, "Bad Request: Expecting multipart/form-data");
+	}
+	else if(parseInt(req.headers['content-length']) > 26214912) {
+		// 1024 * 1024 * 25 MB + 512 free bytes (headers) 
+		return JSONerror(res, "Bad Request: File too big (25 Mb max.)");
+	}
+
 	
 	console.log('Uploading '+req.headers['content-length']+ ' bytes of data');
 
@@ -123,14 +188,13 @@ exports.handout = function(req, res, next) {
 	form.encoding = 'utf-8';
 	// form.uploadDir = __dirname + "/../temp"; // Not used with GridFS
 
-	var handout = {};
+	var handout = {handout_id: id};
 
 	form.on("field", function(field, value){
 
 		console.log('Field ' + field + ' = ' + value);	
 
 		switch(field) { // Everything else will be ignored
-			case "_id": handout.handout_id = value; break;
 			case "NIU": handout.NIU = value; break;
 		}
 	});
@@ -145,7 +209,7 @@ exports.handout = function(req, res, next) {
 	
 	form.on("end", function(){
 		res.setHeader("Content-Type", "text/plain");
-		res.end("1");
+		res.end("1000");
 	});
 
 	form.on('fileBegin', function (name, file) {
@@ -153,6 +217,16 @@ exports.handout = function(req, res, next) {
 		console.log(file);
 		console.log(handout);
 		file.metadata = handout;
+
+		if(file.name.length === 0) {
+			req.pause();
+   			res.status(400).end("No file found.");
+			//return res.JSONerror("Bad Request: No file found");
+		}
+		else if(file.type !== "application/zip") {
+			req.pause();
+   			res.status(400).end("Invalid file format. ZIP expected.");
+		}
 	});
 
 
@@ -187,6 +261,9 @@ exports.handout = function(req, res, next) {
 
 
 exports.download = function(req, res, next) {
+
+
+	console.log("DOWN!!");
 
 
 	var id = req.params.id;

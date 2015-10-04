@@ -2,7 +2,7 @@
 <li>
 	<header>
 		<h2 class="title">
-			<span class="tag small subject">{{ item.subject }}</span>
+			<span class="tag small subject" data-title="{{ item.subject.name }}">{{ item.subject.abbr }}</span>
 			<span class="editable" placeholder="Handout title...">{{ item.title }}</span>
 			<a href="/download/{{ item.id }}" class="btn download">DL ZIP</a>
 		</h2>

@@ -65,14 +65,15 @@ $(function() {
 
 		if( !$target.hasClass("download") && $header.find(".editing").length === 0) {
 			$(e.currentTarget).parent().find(".details").toggleClass("hidden");
-			// e.preventDefault();
+			e.preventDefault();
 		}
 		else if($target.parent().hasClass("options")) {
 			$target.parent().addClass("hidden").prev().val($target.text().split(" - ")[0]);
-			// e.preventDefault();
+			e.preventDefault();
 		}
 
-		e.preventDefault();
+		// This would make download link not work!
+		// e.preventDefault();
 
 	});
 
@@ -96,13 +97,15 @@ $(function() {
 	
 		$target = $(e.target);
 
-		if($target.hasClass("btn")) {
+		if($target.hasClass("btn") && !$target.hasClass("upload") && !$target.hasClass("file-wr")) {
 
-			$target.toggleClass("hidden");
+			console.log("AA");
 
 			switch( $target.text().toLowerCase() ) {
 
 				case "edit":
+					$target.toggleClass("hidden");
+
 					var $handoutEntry = $target.parents("li");
 					var $handoutSubject = $handoutEntry.find(".tag");
 					var $handoutTitle = $handoutEntry.find(".title > span").eq(1);
@@ -120,6 +123,8 @@ $(function() {
 					break;
 
 				case "delete":
+					$target.toggleClass("hidden");
+
 					$target.siblings(".yes").toggleClass("hidden").data("action", "delete");
 					$target.siblings(".no").toggleClass("hidden").data("action", ".edit, .delete, .yes, .no");
 					$target.siblings(".edit, .delete").toggleClass("hidden");
@@ -127,6 +132,8 @@ $(function() {
 					break;
 
 				case "save":
+					$target.toggleClass("hidden");
+
 					$target.siblings(".yes").toggleClass("hidden").data("action", "save");
 					$target.siblings(".no").toggleClass("hidden").data("action", ".save, .discard, .yes, .no");
 					$target.siblings(".save, .discard").toggleClass("hidden");
@@ -135,6 +142,8 @@ $(function() {
 					break;
 
 				case "discard":
+					$target.toggleClass("hidden");
+
 					$target.siblings(".yes").toggleClass("hidden").data("action", "discard");
 					$target.siblings(".no").toggleClass("hidden").data("action", ".save, .discard, .yes, .no");
 					$target.siblings(".save, .discard").toggleClass("hidden");
@@ -143,6 +152,8 @@ $(function() {
 					break;
 
 				case "clear":
+					$target.toggleClass("hidden");
+
 					$target.siblings(".yes").toggleClass("hidden").data("action", "clear");
 					$target.siblings(".no").toggleClass("hidden").data("action", ".create, .clear, .yes, .no");
 					$target.siblings(".create, .clear").toggleClass("hidden");
@@ -151,6 +162,8 @@ $(function() {
 					break;
 
 				case "create":
+					$target.toggleClass("hidden");
+
 					$target.siblings(".yes").toggleClass("hidden").data("action", "create");
 					$target.siblings(".no").toggleClass("hidden").data("action", ".create, .clear, .yes, .no");
 					$target.siblings(".create, .clear").toggleClass("hidden");
@@ -159,6 +172,8 @@ $(function() {
 					break;				
 
 				case "yes":
+					$target.toggleClass("hidden");
+
 					switch( $target.data("action") ) {
 						case "delete":
 							break;
@@ -195,15 +210,18 @@ $(function() {
 					break;
 
 				case "no":
+					$target.toggleClass("hidden");
+
 					$target.siblings($target.data("action")).toggleClass("hidden");
 					$target.siblings(".message").addClass("hidden"); // TO-DO: Wait some time...
 					// Re-enable edit mode if previously set!
 					break;
 
 			}
+
+			e.preventDefault();
 		}
 
-		e.preventDefault();
 	});
 	
 	$("#ohandouts").on("click", ".upload", function(e) {
@@ -219,6 +237,7 @@ $(function() {
 		
 		iframe.load(function(e) {
 			console.log(e.target.id + " LOADED.");
+			console.log($(e.target.contentDocument || e.target.contentWindow.document).text());
 			e.target.remove();
 			iframes--;
 			console.log(e.target.id + " REMOVED.");
@@ -231,6 +250,17 @@ $(function() {
 		console.log(e);
 		console.log(e.target.value);
 		console.log($(e.target).val());
+
+		if(e.target.type === "file") {
+			var val = e.target.value;
+			if(val) {
+				var path = val.split("\\");
+				e.target.previousSibling.innerHTML = path[path.length - 1];
+			}
+			else {
+				e.target.previousSibling.innerHTML = "No file selected..."
+			}
+		}
 	});	
 	
 	// TO-DO: requestAnimationFrame polyfill + timers class!!!

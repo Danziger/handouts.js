@@ -9,6 +9,11 @@ var credentialsController = require('../controllers/credentials.js');
 
 
 
+// PARAMS: /////////////////////////////////////////////////////////////////////
+
+router.param('handoutID', handoutsController.load);
+
+
 // AUTHENTICATION: /////////////////////////////////////////////////////////////
 
 router.use(credentialsController.authenticate);
@@ -38,7 +43,7 @@ router.get('/closed', handoutsController.closed);
 
 // POST /
 
-router.post('/', handoutsController.handout);
+router.post('/handout/:handoutID', handoutsController.handout);
 
 
 
@@ -54,7 +59,7 @@ router.put('/handout/:id', credentialsController.loginRequired, handoutsControll
 
 router.delete('/handout/:id', credentialsController.loginRequired, handoutsController.delete);
 
-router.post('/handout', credentialsController.loginRequired, handoutsController.create);
+//router.post('/handout', credentialsController.loginRequired, handoutsController.create);
 
 
 
