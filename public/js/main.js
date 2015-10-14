@@ -79,10 +79,26 @@ $(function() {
 
 	var popup = null;
 
-	$("#ohandouts, #chandouts").on("focus", "header", function(e) {
+	$("#ohandouts, #chandouts").on("focus", ".fill-tag", function(e) {
 		popup = $(e.target).siblings(".options").removeClass("hidden");
+
+		$(document).on("click", hidePopup);
 	});
 
+
+	// TO-DO: Create a function called togglePopup to have only one visible popup at a time.
+	// TO-DO: Bind and unbind this document click event when needed.
+
+	function hidePopup(e) {
+
+		$target = $(e.target);
+
+		if(popup && !$target.is(popup) && !$target.next().is(popup)) {
+			popup.addClass("hidden");
+			$(document).off("click", hidePopup);
+			e.preventDefault();		
+		}
+	}
 
 	/*$(document).on("click", function(e) {
 		console.log("ROOT");
@@ -91,7 +107,7 @@ $(function() {
 		if(popup) popup.addClass("hidden");
 	});*/
 
-
+	// TO-DO: Refactor and organise all this code...
 
 	$("#ohandouts, #chandouts").on("click", ".details", function(e) {
 	

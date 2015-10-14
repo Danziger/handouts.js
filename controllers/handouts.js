@@ -213,6 +213,9 @@ exports.handout = function(req, res, next) {
 	});
 
 	form.on('fileBegin', function (name, file) {
+
+		// TO-DO: Validate all form fields here and return a JSON response
+
 		console.log("File " + name +  " begin:");
 		console.log(file);
 		console.log(handout);
@@ -220,12 +223,13 @@ exports.handout = function(req, res, next) {
 
 		if(file.name.length === 0) {
 			req.pause();
-   			res.status(400).end("No file found.");
-			//return res.JSONerror("Bad Request: No file found");
+   			//res.status(400).end("No file found.");
+   			return JSONerror(res, "Bad Request: No file found.");
 		}
 		else if(file.type !== "application/zip") {
 			req.pause();
-   			res.status(400).end("Invalid file format. ZIP expected.");
+   			//res.status(400).end("Invalid file format. ZIP expected.");
+   			return JSONerror(res, "Invalid file format. ZIP expected.");
 		}
 	});
 
