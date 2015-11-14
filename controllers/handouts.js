@@ -204,12 +204,16 @@ exports.handout = function(req, res, next) {
 	});
 
 	form.on("error", function(err) {
-		that.error(req, res, 500, "500 Internal Server Error: Ops, something broke...");
+		return JSONError(res, "Ops, something broke...", 500);
 	});
 	
 	form.on("end", function(){
-		res.setHeader("Content-Type", "text/plain");
-		res.end("1000");
+		try {
+			res.setHeader("Content-Type", "text/plain");
+			res.end("1000");
+		} catch(e) {
+			
+		} 
 	});
 
 	form.on('fileBegin', function (name, file) {
@@ -221,12 +225,15 @@ exports.handout = function(req, res, next) {
 		console.log(handout);
 		file.metadata = handout;
 
+		console.log("TYPE");
+		console.log(file.type)
+		
 		if(file.name.length === 0) {
 			req.pause();
    			//res.status(400).end("No file found.");
    			return JSONerror(res, "Bad Request: No file found.");
 		}
-		else if(file.type !== "application/zip") {
+		else if(file.type !== "application/zip" && file.type !== "application/octet-stream") {
 			req.pause();
    			//res.status(400).end("Invalid file format. ZIP expected.");
    			return JSONerror(res, "Invalid file format. ZIP expected.");

@@ -1,7 +1,5 @@
 /*global console, $, Formatter*/
 
-// https://code.google.com/p/jslibs/wiki/JavascriptTips#Singleton_pattern
-
 var  app = (function (window, $, Formatter) {
     "use strict";
     
@@ -197,6 +195,9 @@ var  app = (function (window, $, Formatter) {
             console.log(ifr + " CREATED.");
 
             var iframe = $('<iframe name="' + ifr + '" id="' + ifr + '"></iframe>');
+			
+			var $errors = $(e.target).closest(".details").find(".errors");
+			
             $("body").append(iframe);
 
 
@@ -204,6 +205,8 @@ var  app = (function (window, $, Formatter) {
             iframe.load(function (e) {
                 console.log(e.target.id + " LOADED.");
                 console.log($(e.target.contentDocument || e.target.contentWindow.document).text());
+				var response = JSON.parse($(e.target.contentDocument || e.target.contentWindow.document).text());
+                $errors.html(response.msg);
                 e.target.remove();
                 iframes--;
                 console.log(e.target.id + " REMOVED.");
@@ -260,4 +263,4 @@ var  app = (function (window, $, Formatter) {
 
 
         
-}(window, $));
+}(window, $, Formatter));

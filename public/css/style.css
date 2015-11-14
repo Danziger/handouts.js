@@ -145,6 +145,7 @@ img {
 #actionbar a {
 	display: block;
 	padding: 0 .5rem;
+	outline: none;
 }
 
 #actionbar a span {
@@ -535,7 +536,7 @@ header {
 	);
 }
 
-.description {
+.description, .errors {
 	margin: 0 0 1rem 0;
 	text-align:justify;
 	outline: none;
@@ -547,6 +548,17 @@ header {
 	background: #FFF;
 	box-shadow: 0 0 1rem -.25rem #000;*/
 
+}
+
+.errors {
+	padding: .5rem;
+	border-radius: 3px;
+	background: #F00;
+	color: #EFE;
+}
+
+.errors:empty {
+	display: none;
 }
 
 .description > .editable {

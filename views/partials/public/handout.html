@@ -11,6 +11,8 @@
 	<div class="details hidden">
 		<div class="description"><div class="editable">{{ item.description }}</div></div>
 
+		<div class="errors"></div>
+		
 		<form method="POST" class="upload-form" action="/handout/{{ item.id }}" enctype="multipart/form-data">
 			<input type="text" class="inp small niu editable editing" name="NIU" pattern="[0-9]*" placeholder="NIU" />
 			<label class="file-wr btn"><span>No file selected...</span><input type="file" class="file" name="file" /></label>
