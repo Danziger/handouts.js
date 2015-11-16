@@ -2,7 +2,7 @@
 
 A simple Node.js app built on top of Express to handle file uploads from students to tasks or assignments setted by the teachers.
 
-# HOW TO MAKE IT RUN
+## HOW TO MAKE IT RUN
 
 Just clone the project and run:
 
@@ -11,11 +11,11 @@ Just clone the project and run:
     
 In a MongoDB terminal run the following commands to set up test dats (see below).
 
-# TEST DATA FOR MONGODB
+## TEST DATA FOR MONGODB
 
 Just copy this and paste it in a MongoDB terminal.
 
-## ASSIGNMENTS:
+### ASSIGNMENTS:
 
     use handouts;
 
@@ -63,7 +63,7 @@ Just copy this and paste it in a MongoDB terminal.
       "description" : "Second Oudated Tasks description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
     });
     
-## SUBJECTS:
+### SUBJECTS:
 
     use handouts;
 
