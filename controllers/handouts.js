@@ -72,20 +72,20 @@ exports.load = function(req, res, next, handoutID) {
 
 exports.index = function(req, res, next) {
 
-	var now = new Date();
-	var promises = [
-		Handout.find({df: {$gte: now}}).exec(),	// currentHandouts
-		Handout.find({df: {$lt: now}}).exec(),	// closedHandouts
-	];
+	var now = new Date(),
+        openEntryPartial = "./partials/public/open-handout.html",
+        closedEntryPartial = "./partials/public/closed-handout.html",
+        previousBlocks = [],
+        promises = [
+            Handout.find({df: {$gte: now}}).exec(),	// currentHandouts
+            Handout.find({df: {$lt: now}}).exec()	// closedHandouts
+        ];
 
 	if(res.locals.authenticated) {
 		promises.push(Subject.find({}).exec()); // subjects
-		var entryPartial = "./partials/admin/handout.html";
-		var previousBlocks = ["./partials/admin/editorTemplates.html", "./partials/admin/createHandout.html"];
-	}
-	else {
-		var entryPartial = "./partials/public/handout.html";
-		var previousBlocks = [];
+		openEntryPartial = "./partials/admin/open-handout.html";
+		closedEntryPartial = "./partials/admin/closed-handout.html";
+		previousBlocks = ["./partials/admin/editorTemplates.html", "./partials/admin/createHandout.html"];
 	}
 
 	Bluebird.all(promises).then(function(results){
@@ -94,7 +94,8 @@ exports.index = function(req, res, next) {
 			currentHandouts: results[0],
 			closedHandouts: results[1],
 			subjects: results[2],
-			entryPartial: entryPartial,
+			openEntryPartial: openEntryPartial,
+            closedEntryPartial: closedEntryPartial,
 			previousBlocks: previousBlocks
 		});
 	}).catch(function(err){
@@ -105,18 +106,29 @@ exports.index = function(req, res, next) {
 
 exports.open = function(req, res, next) {
 
-	var now = new Date();
+	var now = new Date(),
+        openEntryPartial = "./partials/public/open-handout.html",
+        previousBlocks = [],
+        promises = [
+            Handout.find({df: {$gte: now}}).exec()	// currentHandouts
+        ];
 
-	Handout.find({df: {$gte: now}}, function(err, docs) {
+	if(res.locals.authenticated) {
+		promises.push(Subject.find({}).exec()); // subjects
+		openEntryPartial = "./partials/admin/open-handout.html";
+		previousBlocks = ["./partials/admin/editorTemplates.html", "./partials/admin/createHandout.html"];
+	}
 
-		if(err) next(err);
-
+	Bluebird.all(promises).then(function(results){
 		res.render('index', {
-			currentHandouts: docs,
 			now: now,
-			entryPartial: res.locals.authenticated ? "./partials/admin/handout.html" : "./partials/public/handout.html",
-			previousBlocks: res.locals.authenticated ? ["./partials/admin/editorTemplates.html"] : []
+			currentHandouts: results[0],
+			subjects: results[1],
+			openEntryPartial: openEntryPartial,
+			previousBlocks: previousBlocks
 		});
+	}).catch(function(err){
+		next(err);
 	});
 };
 
@@ -124,18 +136,29 @@ exports.open = function(req, res, next) {
 
 exports.closed = function(req, res, next) {
 
-	var now = new Date();
+	var now = new Date(),
+        closedEntryPartial = "./partials/public/closed-handout.html",
+        previousBlocks = [],
+        promises = [
+            Handout.find({df: {$lt: now}}).exec(),	// closedHandouts
+        ];
 
-	Handout.find({df: {$lt: now}}, function(err, docs) {
+	if(res.locals.authenticated) {
+		promises.push(Subject.find({}).exec()); // subjects
+		closedEntryPartial = "./partials/admin/closed-handout.html";
+		previousBlocks = ["./partials/admin/editorTemplates.html", "./partials/admin/createHandout.html"];
+	}
 
-		if(err) next(err);
-
+	Bluebird.all(promises).then(function(results){
 		res.render('index', {
-			closedHandouts: docs,
 			now: now,
-			entryPartial: res.locals.authenticated ? "./partials/admin/handout.html" : "./partials/public/handout.html",
-			previousBlocks: res.locals.authenticated ? ["./partials/admin/editorTemplates.html", "./partials/admin/editorTemplates.html"] : []
+			closedHandouts: results[0],
+			subjects: results[1],
+            closedEntryPartial: closedEntryPartial,
+			previousBlocks: previousBlocks
 		});
+	}).catch(function(err){
+		next(err);
 	});
 };
 

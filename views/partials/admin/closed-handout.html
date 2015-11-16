@@ -1,4 +1,3 @@
-
 <li>
 	<header>
 		<h2 class="title">
@@ -6,11 +5,11 @@
 			<span class="editable" placeholder="Handout title...">{{ item.title }}</span>
 			<a href="/download/{{ item.id }}" class="btn download">DL ZIP</a>
 		</h2>
-		<div class="time">POSTED ON {{ formater.format(item.d0) }} | WILL CLOSE BY <span class="df editable date" data-df="{{ item.df.getTime() }}">{{ formater.format(item.df) }}</span> | TIME LEFT <span class="left">{{ formater.diff(now, item.df) }}</span></div>
+		<div class="time">POSTED ON {{ formatter.format(item.d0) }} | CLOSED ON <span class="df editable date" data-df="{{ item.df.getTime() }}">{{ formatter.format(item.df) }}</span> | <span class="left">{{ formatter.diff(now, item.df) }}</span></div>
 	</header>
 
 	<div class="details hidden">
-		<div class="description"><div class="editable" placeholder="Task description...">{{ item.description }}</div></div>
+		<div class="description"><div class="editable">{{ item.description }}</div></div>
 
 		<footer class="actions">
 			<button class="btn edit">EDIT</button>

@@ -1,0 +1,13 @@
+<li>
+	<header>
+		<h2 class="title">
+			<span class="tag small subject" data-title="{{ item.subject.name }}">{{ item.subject.abbr }}</span>
+			<span class="editable">{{ item.title }}</span>
+		</h2>
+		<div class="time">POSTED ON {{ formatter.format(item.d0) }} | CLOSED ON <span class="df editable date" data-df="{{ item.df.getTime() }}">{{ formatter.format(item.df) }}</span> | <span class="left">{{ formatter.diff(now, item.df) }}</span></div>
+	</header>
+
+	<div class="details hidden">
+		<div class="description"><div class="editable">{{ item.description }}</div></div>
+	</div>
+</li>

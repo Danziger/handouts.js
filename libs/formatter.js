@@ -1,6 +1,8 @@
-/* Same as libs/formatter.js */
+/*global exports, module */
 
-(function (global) {
+/* Same as public/js/formatter.js */
+
+(function () {
 
     "use strict";
    
@@ -14,7 +16,7 @@
 		
 		Formatter.prototype.SINGLETON_INSTANCE = this;
 	};
-
+    
 	Formatter.prototype.isInteger = function (i) {
 		return i === parseInt(i, 10);
 	};
@@ -78,6 +80,6 @@
 
 	// EXPORT:
 
-    global.Formatter = new Formatter();
+    module.exports = Formatter;
 
-}(window));
+}());

@@ -9,7 +9,7 @@ var swig = require('swig');
 var methodOverride = require('method-override');
 var session = require('express-session');
 
-var formater = require('./libs/formater');
+var formatter = require('./libs/formatter')();
 
 var routes = require('./routes/index');
 
@@ -85,7 +85,7 @@ app.use(session({
 
 app.locals = {
   title: "Application Title",
-  formater: formater
+  formatter: formatter
 };
 
 

@@ -1,6 +1,6 @@
-/*global console, $, Formatter*/
+/*global $, Formatter*/
 
-var  app = (function (window, $, Formatter) {
+(function (window, $, Formatter) {
     "use strict";
     
     var iframes = 0;
@@ -55,13 +55,19 @@ var  app = (function (window, $, Formatter) {
             if(popup) popup.addClass("hidden");
         });*/
 
+        
+        $("#ohandouts, #chandouts").on("click", ".errors", function (e) {
+            var currentTarget = e.currentTarget;
+            currentTarget.parentNode.removeChild(currentTarget);
+        });
+        
         // TO-DO: Refactor and organise all this code...
 
         $("#ohandouts, #chandouts").on("click", ".details", function (e) {
 
             var $target = $(e.target);
 
-            if ($target.hasClass("btn") && !$target.hasClass("upload") && !$target.hasClass("file-wr")) {
+            if ($target.hasClass("btn") && !$target.hasClass("upload") && !$target.hasClass("file-wr") && !$target.hasClass("errors")) {
 
                 console.log("AA");
 
@@ -188,7 +194,7 @@ var  app = (function (window, $, Formatter) {
 
         });
 
-        $("#ohandouts").on("click", ".upload", function (e) {
+        $("#ohandouts, #chandouts").on("click", ".upload", function (e) {
 
             var ifr = "ifr" + (iframes++);
 
@@ -196,11 +202,9 @@ var  app = (function (window, $, Formatter) {
 
             var iframe = $('<iframe name="' + ifr + '" id="' + ifr + '"></iframe>');
 			
-			var $errors = $(e.target).closest(".details").find(".errors");
+			var $errors = $('<div class="errors"></div>').insertAfter($(e.target).closest(".details").find(".description"));
 			
             $("body").append(iframe);
-
-
 
             iframe.load(function (e) {
                 console.log(e.target.id + " LOADED.");
@@ -259,8 +263,5 @@ var  app = (function (window, $, Formatter) {
 
         // Separate admin-only JS.
     });
-
-
-
-        
+   
 }(window, $, Formatter));

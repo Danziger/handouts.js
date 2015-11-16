@@ -52,7 +52,6 @@ body:after {
 	bottom:0;
 }
 
-
 footer:before, footer:after {
 	content:"";
 	position:fixed;
@@ -555,10 +554,38 @@ header {
 	border-radius: 3px;
 	background: #F00;
 	color: #EFE;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 .errors:empty {
 	display: none;
+}
+
+.errors:hover::before {
+    content: "";
+    position: absolute;
+    top: -4rem;
+    right: -4rem;
+    width: 8rem;
+    height: 4rem;
+    transform: rotate(45deg);
+    background: #F00;
+    transform-origin: left bottom;
+    box-shadow: 0 0 2rem 2rem #F00;
+}
+
+.errors:hover::after {
+    content:"×";
+    position:absolute;
+    top: 0;
+    right: 0;
+    width: 2rem;
+    height: 2rem;
+    text-align: right;
+    padding: .5rem;
+    font-size: 2rem;
 }
 
 .description > .editable {
