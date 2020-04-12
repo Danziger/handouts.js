@@ -1,17 +1,29 @@
-# handouts.js
+handouts.js
+===========
 
-A simple Node.js app built on top of Express to handle file uploads from students to tasks or assignments setted by the teachers.
+**Please, be aware this is an old and outdated hackathon-like / weekend project. I just left it here as a reference, but even if you are planning on doing something similar, you are probably better of starting from scratch.**
 
-## Make It Run
+A simple Node.js app built on top of Express to handle file uploads from students to tasks or assignments set by teachers.
 
-Just clone the project and run:
+This is how the main (student) page looks like:
 
-    npm install
-    npm start
-    
-In a MongoDB terminal run the following commands to set up test dats (see below).
+<img src="./static/screenshots/main-page-screenshot.png" />
 
-## MongoDB Test Data
+
+Running It
+----------
+
+First, clone the project and run `npm install`.
+
+Open two terminals and run MongoDB using with `mongod` and `mongo`. In the `mongo` one, use the commands in the `MongoDB Test Data` section to pre-populate the database with some test data.
+
+Now, run `npm start`. You should be able to access the project at `http://localhost:3000`.    
+
+You can use any either `Alice` or `Bob` + `12345678` if you want to see the admin-only features.
+
+
+MongoDB Test Data
+-----------------
 
 Just copy this and paste it in a MongoDB terminal.
 

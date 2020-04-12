@@ -4,8 +4,8 @@ var auth = require('basic-auth');
 ////////////////////////////////////////////////////////////////////////////////
 
 var admins = [
-	"Ian",
-	"Danziger"
+	"Alice",
+	"Bob"
 ];
 
 var passwords = [
